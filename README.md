@@ -19,7 +19,7 @@ $$ I \ddot{\phi}+C\ddot{x}  = -T-\theta\dot{\phi}-Cg\phi$$
 ## Matrix Representation
 
 
-![Matrix Equation](matrix_representation.jpg)
+![Matrix Equation](docs/matrix_representation.jpg)
 
 
 
