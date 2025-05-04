@@ -34,62 +34,65 @@ The Segway robot consists of:
 ### Step 1: Kinetic Energy
 
 **Wheel kinetic energy**:
-- Translational: \(\frac{1}{2} m_w \dot{x}^2\)
-- Rotational: \(\frac{1}{2} I_w \left( \frac{\dot{x}}{r} \right)^2\)
+- Translational: $\(\frac{1}{2} m_w \dot{x}^2\)$
+- Rotational: $\(\frac{1}{2} I_w \left( \frac{\dot{x}}{r} \right)^2\)$
 
 **Total wheel**:  
-\[
+
+$$
 T_w = \frac{1}{2} m_w \dot{x}^2 + \frac{1}{2} I_w \left( \frac{\dot{x}}{r} \right)^2
-\]
+
+$$
 
 **Body kinetic energy**:  
-\[
+
+$$
 T_b = \frac{1}{2} m_b \left[ \dot{x}^2 + 2 \dot{x} l \dot{\theta} \cos \theta + l^2 \dot{\theta}^2 \right] + \frac{1}{2} I_b \dot{\theta}^2
-\]
+$$
 
 **Total kinetic energy**:  
-\[
+
+$$
 T = \frac{1}{2} \left( m_w + m_b + \frac{I_w}{r^2} \right) \dot{x}^2 + m_b l \dot{x} \dot{\theta} \cos \theta + \frac{1}{2} \left( m_b l^2 + I_b \right) \dot{\theta}^2
-\]
+$$
 
 ---
 
 ### Step 2: Potential Energy
 
-\[
-V = m_b g l \cos \theta
-\]
-
----
+$$
+V = m_{b} g l cos{\theta}
+$$
 
 ### Step 3: Lagrangian
 
-\[
+$$
 \mathcal{L} = T - V = \frac{1}{2} \left( m_w + m_b + \frac{I_w}{r^2} \right) \dot{x}^2 + m_b l \dot{x} \dot{\theta} \cos \theta + \frac{1}{2} \left( m_b l^2 + I_b \right) \dot{\theta}^2 - m_b g l \cos \theta
-\]
+$$
 
 ---
 
 ### Step 4: Euler-Lagrange Equations
 
-**For** \(x\):
+**For** $x$:
 
-\[
+$$
 \left( m_w + m_b + \frac{I_w}{r^2} \right) \ddot{x} + m_b l \ddot{\theta} \cos \theta - m_b l \dot{\theta}^2 \sin \theta = \frac{\tau}{r}
-\]
+$$
 
-**For** \(\theta\):
+**For** $\theta$:
 
-\[
+$$
 m_b l \ddot{x} \cos \theta + \left( m_b l^2 + I_b \right) \ddot{\theta} + m_b g l \sin \theta = -\tau
-\]
+$$
 
 ---
 
 ## Matrix Form
 
 **Standard form**:
-\[
+
+$$
 \begin{bmatrix}
 m_w + m_b + \frac{I_w}{r^2} & m_b l \cos \theta \\
 m_b l \cos \theta & m_b l^2 + I_b
@@ -108,10 +111,11 @@ m_b g l \sin \theta
 \frac{\tau}{r} \\
 -\tau
 \end{bmatrix}
-\]
+$$
 
 **Code-scaled form**:
-\[
+
+$$
 \begin{bmatrix}
 ( m_w + m_b ) r^2 + I_w & m_b r l \cos \theta \\
 m_b r l \cos \theta & m_b l^2 + I_b
@@ -130,7 +134,7 @@ m_b g l \sin \theta
 \tau \\
 0
 \end{bmatrix}
-\]
+$$
 
 ---
 
