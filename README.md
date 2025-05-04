@@ -21,7 +21,19 @@ $$ I \ddot{\phi}+C\ddot{x}  = -T-\theta\dot{\phi}-Cg\phi$$
 
 ![Matrix Equation](docs/matrix_representation.jpg)
 
+### State and Action Space
 
+$$
+S = [x, \dot{x}, \phi, \dot{\phi}],
+$$
+
+$$
+a = \begin{bmatrix}
+T \\
+\end{bmatrix}.
+$$
+
+If we define a Lyapunov function
 
 Now we define a variable $s$ which we call the sliding surface. This will help us define all the states in a single variable and help implementation of the Lyapunov method.
 
