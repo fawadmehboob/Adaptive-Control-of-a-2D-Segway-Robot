@@ -41,7 +41,6 @@ The Segway robot consists of:
 
 $$
 T_w = \frac{1}{2} m_w \dot{x}^2 + \frac{1}{2} I_w \left( \frac{\dot{x}}{r} \right)^2
-
 $$
 
 **Body kinetic energy**:  
@@ -90,53 +89,13 @@ $$
 
 ## Matrix Form
 
-**Standard form**:
 
-$$
-\begin{bmatrix}
-m_w + m_b + \frac{I_w}{r^2} & m_b l \cos \theta \\
-m_b l \cos \theta & m_b l^2 + I_b
-\end{bmatrix}
-\begin{bmatrix}
-\ddot{x} \\
-\ddot{\theta}
-\end{bmatrix}
-+
-\begin{bmatrix}
-- m_b l \dot{\theta}^2 \sin \theta \\
-m_b g l \sin \theta
-\end{bmatrix}
-=
-\begin{bmatrix}
-\frac{\tau}{r} \\
--\tau
-\end{bmatrix}
-$$
+![Matrix Equation](docs/matrix_representation.jpg)
 
-**Code-scaled form**:
 
-$$
-\begin{bmatrix}
-( m_w + m_b ) r^2 + I_w & m_b r l \cos \theta \\
-m_b r l \cos \theta & m_b l^2 + I_b
-\end{bmatrix}
-\begin{bmatrix}
-\ddot{x}/r \\
-\ddot{\theta}
-\end{bmatrix}
-+
-\begin{bmatrix}
-m_b r l \dot{\theta}^2 \sin \theta \\
-m_b g l \sin \theta
-\end{bmatrix}
-=
-\begin{bmatrix}
-\tau \\
-0
-\end{bmatrix}
-$$
 
----
+![Matrix Equation](docs/matrix_form.jpg)
+
 
 ## Conclusion
 
