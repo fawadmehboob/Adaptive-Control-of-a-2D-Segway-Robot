@@ -36,7 +36,7 @@ T \\
 \end{bmatrix}.
 $$
 
-
+## Lyapunov Control
 Now we define a variable \( e \), which we call the sliding surface. This will help us define all the states in a single variable and facilitate the implementation of the Lyapunov method with adaptive control.
 
 $$
@@ -119,7 +119,7 @@ $$v = \frac{1}{MI - C^2} {k_2{\frac{I}{R}+C}- k_4{\frac{C}{R}+M}}$$
 $$b = \frac{Cg}{MI - C^2} {-k_2C+ k_4M}$$
 $$c = \frac{1}{MI - C^2} {k_2C- k_4M}$$
 
-##  Adaptive Lyapunov Formulation
+###  Adaptive Lyapunov Formulation
 
 we define a Lyapunov function:
 
@@ -144,6 +144,7 @@ we choose the control action T as:
 $$ T = \frac{-pe + k_1\dot{x} + k_3 \dot{\phi} + b \phi + c\hat{\theta} \dot{\phi}}{a}$$
 
 Substituting this T into $\dot{L}$ we get:
+
 $$\dot{L} = -pe^2 +ec(\theta - \hat{\theta})\dot{\phi} + (\theta- \hat{\theta})\dot{\hat{\theta}}$$
 
 To get rid of the unknown $\theta$ term we propose an update law for $hat{\theta}$ as:
