@@ -150,7 +150,7 @@ we choose the control action T as:
 $$ T = \frac{-ps + k_1\dot{x} + k_3 \dot{\phi} + b \phi + c\hat{\theta} \dot{\phi}}{a}$$
 
 Substituting this T into $\dot{L}$ we get:
-$$\dot{L} = -ps^2 +sc(\theta - \hat{\theta}) + (\theta- \hat{\theta})\dot{\hat{\theta}}$$
+$$\dot{L} = -ps^2 +sc(\theta - \hat{\theta})\dot{\phi} + (\theta- \hat{\theta})\dot{\hat{\theta}}$$
 
 To get rid of the unknown $\theta$ term we propose an update law for $hat{\theta}$ as:
 
