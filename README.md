@@ -62,13 +62,13 @@ $$
 Substituting the expression for $\dot{e}$:
 
 $$
-\dot{e} = k_1 \dot{x} + k_3 \dot{\phi} + a T + b \phi + c \theta \dot{\phi}
+\dot{e} = k_1 \dot{x} + k_3 \dot{\phi} + v T + b \phi + c \theta \dot{\phi}
 $$
 
 we get:
 
 $$
-\dot{L} = e \left( k_1 \dot{x} + k_3 \dot{\phi} + a T + b \phi + c \theta \dot{\phi} \right)
+\dot{L} = e \left( k_1 \dot{x} + k_3 \dot{\phi} + v T + b \phi + c \theta \dot{\phi} \right)
 $$
 
 To make $\dot{L} \leq 0$, we might attempt to choose the control torque $T$ to cancel the known terms and make $\dot{L}$ negative, for example:
@@ -113,7 +113,7 @@ $$ \dot{e} = k_1\dot{x} + k_2\ddot{x} + k_3\dot{\phi} + k_4\ddot{\phi} $$
 the derivative of e can be defined in a simpler form by isolating the terms $T$, $\phi$ and $\theta\dot{\phi}$.
 
 
-$$ \dot{e} = k_1\dot{x} + k_3\dot{\phi} + aT + b \phi + c \theta\dot{\phi} $$
+$$ \dot{e} = k_1\dot{x} + k_3\dot{\phi} + vT + b \phi + c \theta\dot{\phi} $$
 where
 $$v = \frac{1}{MI - C^2} {k_2{\frac{I}{R}+C}- k_4{\frac{C}{R}+M}}$$
 $$b = \frac{Cg}{MI - C^2} {-k_2C+ k_4M}$$
@@ -132,16 +132,16 @@ $$\dot{L} = e\dot{e} +(\hat{\theta} - \theta)\dot{\hat{\theta}}$$
 Now Substituting $\dot{e}$ and grouping the terms involving $\theta$ together,
 here we treat $\dot{e}$ differently by relpacing $\theta$ as an error term of the estimated $\hat{\theta}$ and $\theta$:
 
-$\dot{e} = k_1\dot{x} + k_3\dot{\phi} + aT + b \phi + c ({\theta - \dot{\hat{\theta}}})\dot{\phi}$
+$\dot{e} = k_1\dot{x} + k_3\dot{\phi} + vT + b \phi + c ({\theta - \dot{\hat{\theta}}})\dot{\phi}$
 
 
-$$\dot{L} = e(k_1\dot{x} + k_3\dot{\phi} + aT + b \phi + c \hat{\theta}\dot{\phi}) +ec(\theta - \hat{\theta})\dot{\phi} + (\theta- \hat{\theta})\dot{\hat{\theta}}$$
+$$\dot{L} = e(k_1\dot{x} + k_3\dot{\phi} + vT + b \phi + c \hat{\theta}\dot{\phi}) +ec(\theta - \hat{\theta})\dot{\phi} + (\theta- \hat{\theta})\dot{\hat{\theta}}$$
 
 
 Now We want the part of our lyapunov derivative that has the state $e$ and control action $T$ to be $\leq-pe$, where $\p$ is a design parameter, this will ensure that our control action keeps the lyapunov derivative strictly negative and thus ensuring a stable system.
 we choose the control action T as:
 
-$$ T = \frac{-pe + k_1\dot{x} + k_3 \dot{\phi} + b \phi + c\hat{\theta} \dot{\phi}}{a}$$
+$$ T = \frac{-pe + k_1\dot{x} + k_3 \dot{\phi} + b \phi + c\hat{\theta} \dot{\phi}}{v}$$
 
 Substituting this T into $\dot{L}$ we get:
 
