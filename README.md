@@ -45,19 +45,29 @@ T \\
 \end{bmatrix}.
 $$
 
-If we define a Lyapunov function without considering the unknown parameter \( \theta \), such as a simpler form:
+Now we define a variable \( s \), which we call the sliding surface. This will help us define all the states in a single variable and facilitate the implementation of the Lyapunov method with adaptive control.
+
+$$
+s = k_1 x + k_2 \dot{x} + k_3 \phi + k_4 \dot{\phi}
+$$
+
+
+Here, $k_1$, $k_2$, $k_3$, $k_4$ are tuneable parameters.
+
+Our Goal is to drive s to zero so that all the states are driven to zero.
+If we define a Lyapunov function without considering the unknown parameter $\theta$, such as a simpler form:
 
 $$
 L = \frac{1}{2} s^2
 $$
 
-we would face challenges in achieving a strictly negative Lyapunov derivative due to the presence of the unknown friction coefficient \( \theta \). The derivative of this simpler Lyapunov function is:
+we would face challenges in achieving a strictly negative Lyapunov derivative due to the presence of the unknown friction coefficient $\theta$. The derivative of this simpler Lyapunov function is:
 
 $$
 \dot{L} = s \dot{s}
 $$
 
-Substituting the expression for \( \dot{s} \):
+Substituting the expression for $\dot{s}$:
 
 $$
 \dot{s} = k_1 \dot{x} + k_3 \dot{\phi} + a T + b \phi + c \theta \dot{\phi}
@@ -69,7 +79,7 @@ $$
 \dot{L} = s \left( k_1 \dot{x} + k_3 \dot{\phi} + a T + b \phi + c \theta \dot{\phi} \right)
 $$
 
-To make \( \dot{L} \leq 0 \), we might attempt to choose the control torque \( T \) to cancel the known terms and make \( \dot{L} \) negative, for example:
+To make $\dot{L} \leq 0$, we might attempt to choose the control torque $T$ to cancel the known terms and make $\dot{L}$ negative, for example:
 
 $$
 a T = -p s - k_1 \dot{x} - k_3 \dot{\phi} - b \phi
@@ -79,7 +89,7 @@ $$
 T = \frac{-p s - k_1 \dot{x} - k_3 \dot{\phi} - b \phi}{a}
 $$
 
-Substituting this \( T \) into \( \dot{s} \):
+Substituting this $T$ into $\dot{s}$:
 
 $$
 \dot{s} = -p s + c \theta \dot{\phi}
@@ -91,30 +101,15 @@ $$
 \dot{L} = s (-p s + c \theta \dot{\phi}) = -p s^2 + s c \theta \dot{\phi}
 $$
 
-The term \( s c \theta \dot{\phi} \) introduces a problem: since \( \theta \) is unknown, we cannot guarantee that \( \dot{L} \) is strictly negative. Depending on the values of \( s \), \( \dot{\phi} \), and \( \theta \), the term \( s c \theta \dot{\phi} \) could be positive and potentially dominate \( -p s^2 \), making \( \dot{L} > 0 \). This means the system’s stability cannot be ensured using this simple Lyapunov approach, as we lack a mechanism to handle the uncertainty in \( \theta \).
+The term $s c \theta \dot{\phi}$ introduces a problem: since $\theta$ is unknown, we cannot guarantee that $\dot{L}$ is strictly negative. Depending on the values of  $s$, $\dot{\phi}$, and $\theta$, the term  $s c \theta \dot{\phi}$ could be positive and potentially dominate $-p s^2$ , making  $\dot{L} > 0 $. This means the system’s stability cannot be ensured using this simple Lyapunov approach, as we lack a mechanism to handle the uncertainty in $\theta$.
 
-In contrast, the adaptive control approach we implemented introduces an estimate \( \hat{\theta} \) for the unknown \( \theta \), and augments the Lyapunov function to include the estimation error:
+In contrast, the adaptive control approach we implemented introduces an estimate $\hat{\theta}$ for the unknown $\theta$, and augments the Lyapunov function to include the estimation error:
 
 $$
 L = \frac{1}{2} s^2 + \frac{1}{2} (\hat{\theta} - \theta)^2
 $$
 
 This allows us to define an update law for \( \hat{\theta} \) that cancels the effect of the unknown \( \theta \), resulting in a strictly negative Lyapunov derivative \( \dot{L} = -p s^2 \), as shown later. This adaptive method effectively stabilizes both \( x \) and \( \phi \), driving them to zero, which would not have been possible with the simpler Lyapunov function due to the uncertainty in \( \theta \).
-
-Now we define a variable \( s \), which we call the sliding surface. This will help us define all the states in a single variable and facilitate the implementation of the Lyapunov method with adaptive control.
-
-$$
-s = k_1 x + k_2 \dot{x} + k_3 \phi + k_4 \dot{\phi}
-$$
-
-Now we define a variable $s$ which we call the sliding surface. This will help us define all the states in a single variable and help implementation of the Lyapunov method.
-
-
-$$ s = k_1x + k_2\dot{x} + k_3\phi + k_4\dot{\phi} $$
-
-Here, $k_1$, $k_2$, $k_3$, $k_4$ are tuneable parameters.
-
-Our Goal is to drive s to zero so that all the states are driven to zero.
 
 we take the derivative of s:
 
