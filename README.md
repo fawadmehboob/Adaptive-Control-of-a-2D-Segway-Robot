@@ -153,5 +153,7 @@ $$ \dot{\hat{\theta}} = -ec\dot{\phi}$$
 
 This cancels the terms incluing $\theta$ and leaves us with a Lyapunov function derivative:
 
-$$\dot{L} = -pe^2$$, which is strictly negative and satisfies our goal of driving the states to zero.
+$$\dot{L} = -pe^2$$
+
+which is strictly negative and satisfies our goal of driving the states to zero.
 
