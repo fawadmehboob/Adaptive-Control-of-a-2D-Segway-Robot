@@ -109,7 +109,7 @@ $$
 L = \frac{1}{2} s^2 + \frac{1}{2} (\hat{\theta} - \theta)^2
 $$
 
-This allows us to define an update law for \( \hat{\theta} \) that cancels the effect of the unknown \( \theta \), resulting in a strictly negative Lyapunov derivative \( \dot{L} = -p s^2 \), as shown later. This adaptive method effectively stabilizes both \( x \) and \( \phi \), driving them to zero, which would not have been possible with the simpler Lyapunov function due to the uncertainty in \( \theta \).
+This allows us to define an update law for $\hat{\theta}$ that cancels the effect of the unknown $\theta$, resulting in a strictly negative Lyapunov derivative $\dot{L} = -p s^2 $, as shown later. This adaptive method effectively stabilizes both $x$ and $\phi$, driving them to zero, which would not have been possible with the simpler Lyapunov function due to the uncertainty in $\theta$.
 
 we take the derivative of s:
 
