@@ -100,7 +100,7 @@ The term $e c \theta \dot{\phi}$ introduces a problem: since $\theta$ is unknown
 In contrast, the adaptive control approach we implemented introduces an estimate $\hat{\theta}$ for the unknown $\theta$, and augments the Lyapunov function to include the estimation error:
 
 $$
-L = \frac{1}{2} e^2 + \frac{1}{2} (\hat{\theta} - \theta)^2
+L = \frac{1}{2} e^2 + \frac{1}{2 \alpha} (\hat{\theta} - \theta)^2
 $$
 
 This allows us to define an update law for $\hat{\theta}$ that cancels the effect of the unknown $\theta$, resulting in a strictly negative Lyapunov derivative $\dot{L} = -p e^2 $, as shown later. This adaptive method effectively stabilizes both $x$ and $\phi$, driving them to zero, which would not have been possible with the simpler Lyapunov function due to the uncertainty in $\theta$.
