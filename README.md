@@ -138,10 +138,10 @@ $$\dot{L} = s\dot{s} +(\hat{\theta} - \theta)\dot{\hat{\theta}}$$
 Now Substituting $\dot{s}$ and grouping the terms involving $\theta$ together,
 here we treat $\dot{s}$ differently by relpacing $\theta$ as an error term of the estimated $\hat{\theta}$ and $\theta$:
 
-$\dot{s} = k_1\dot{x} + k_3\dot{\phi} + aT + b \phi + c {\theta - \dot{\hat{\theta}}}\dot{\phi}$
+$\dot{s} = k_1\dot{x} + k_3\dot{\phi} + aT + b \phi + c ({\theta - \dot{\hat{\theta}}})\dot{\phi}$
 
 
-$$\dot{L} = s(k_1\dot{x} + k_3\dot{\phi} + aT + b \phi + c \hat{\theta}\dot{\phi}) +sc(\theta - \hat{\theta}) + (\theta- \hat{\theta})\dot{\hat{\theta}}$$
+$$\dot{L} = s(k_1\dot{x} + k_3\dot{\phi} + aT + b \phi + c \hat{\theta}\dot{\phi}) +sc(\theta - \hat{\theta})\dot{\phi} + (\theta- \hat{\theta})\dot{\hat{\theta}}$$
 
 
 Now We want the part of our lyapunov derivative that has the state $s$ and control action $T$ to be $\leq-ps$, where $\p$ is a design parameter, this will ensure that our control action keeps the lyapunov derivative strictly negative and thus ensuring a stable system.
