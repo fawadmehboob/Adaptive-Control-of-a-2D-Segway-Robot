@@ -93,6 +93,8 @@ $$
 \dot{L} = e (-p e + c \theta \dot{\phi}) = -p e^2 + e c \theta \dot{\phi}
 $$
 
+## Adaptive Lyapunov Control
+
 The term $e c \theta \dot{\phi}$ introduces a problem: since $\theta$ is unknown, we cannot guarantee that $\dot{L}$ is strictly negative. Depending on the values of  $e$, $\dot{\phi}$, and $\theta$, the term  $e c \theta \dot{\phi}$ could be positive and potentially dominate $-p e^2$ , making  $\dot{L} > 0 $. This means the system’s stability cannot be ensured using this simple Lyapunov approach, as we lack a mechanism to handle the uncertainty in $\theta$.
 
 In contrast, the adaptive control approach we implemented introduces an estimate $\hat{\theta}$ for the unknown $\theta$, and augments the Lyapunov function to include the estimation error:
@@ -117,7 +119,7 @@ $$v = \frac{1}{MI - C^2} {k_2{\frac{I}{R}+C}- k_4{\frac{C}{R}+M}}$$
 $$b = \frac{Cg}{MI - C^2} {-k_2C+ k_4M}$$
 $$c = \frac{1}{MI - C^2} {k_2C- k_4M}$$
 
-## Lyapunov Formulation
+##  Adaptive Lyapunov Formulation
 
 we define a Lyapunov function:
 
