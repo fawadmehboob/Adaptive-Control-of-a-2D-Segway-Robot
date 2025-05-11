@@ -16,13 +16,6 @@ Here $M$, $I$, and $C$ are constant system parameters defined as:
 $M = m_1 + m_2 +\frac{I_2}{R^2}$, $I = I_1 + m_1 (\frac{l}{2})^2$, and $C = m_1 \frac{l}{2}$; $m_1$, and $m_2$ are the masses of the wheel and the link respectively, $l$ is the link length, $g$ is gravitational constant, $R$ is the wheel radius, $I_2$ is the link inertia, $T$ is the torque input to the wheel, and $\theta$ is the unknown parameter that we shall handle using the adaptive control. A more elaborate detail of the dynamics can be found in the markdown "SegWay Dynamics.md".
 
 
-# Dynamics Linearization
-Since the segway is intended to operate around an equilibrium position, it is reasonable to linearize the dynamics about the point $\phi = 0$, $\dot{\phi} \approx0$, which lead to the dynamics
-
-$$ M \ddot{x}+C\ddot{\phi}=\frac{T}{R}$$
-$$ I \ddot{\phi}+C\ddot{x}  = -T-\theta\dot{\phi}-Cg\phi$$
-
-
 ## Matrix Representation
 
 
@@ -119,9 +112,9 @@ the derivative of e can be defined in a simpler form by isolating the terms $T$,
 
 $$ \dot{e} = k_1\dot{x} + k_3\dot{\phi} + vT + b \phi + c \theta\dot{\phi} $$
 where
-$$v = \frac{1}{MI - C^2} {k_2{\frac{I}{R}+C}- k_4{\frac{C}{R}+M}}$$
-$$b = \frac{Cg}{MI - C^2} {-k_2C+ k_4M}$$
-$$c = \frac{1}{MI - C^2} {k_2C- k_4M}$$
+$$v = \frac{k_2(I/R + Ccos\phi) + k_4(-Ccos\phi/R - M)}{MI - (Ccos\phi)^2}$$
+$$b = \frac{k_2(IC\dot{\phi}^2 sin\phi - C^2gcos\phi sin\phi) + k_4(-C^2(\dot{\phi})^2cos\phi sin\phi + MCgsin\phi)}{MI - (Ccos\phi)^2}$$
+$$c = \frac{k_2Ccos\phi - k_4M}{MI - (Ccos\phi)^2}$$
 
 ###  Adaptive Lyapunov Formulation
 
@@ -133,7 +126,7 @@ The derivative of this Lyapunov function is:
 
 $$\dot{L} = e\dot{e} +(\hat{\theta} - \theta)\dot{\hat{\theta}}$$
 
-Now Substituting $\dot{e}$ and grouping the terms involving $\theta$ together,
+Now Substituting $\dot{e}$ and grouping the terms involving $\theta$ together, also substituting the expressions for $\ddot{x}$, and $\ddot{\phi}$.
 here we treat $\dot{e}$ differently by relpacing $\theta$ as an error term of the estimated $\hat{\theta}$ and $\theta$:
 
 $\dot{e} = k_1\dot{x} + k_3\dot{\phi} + vT + b \phi + c ({\theta - \dot{\hat{\theta}}})\dot{\phi}$
@@ -161,3 +154,56 @@ $$\dot{L} = -pe^2$$
 
 which is strictly negative and satisfies our goal of driving the states to zero.
 
+
+## Adaptive Control With Authority in Translational Velocity
+
+Now we would like to extend our controller functionality by introducing velocity control. Previously, we only derived a controller that drove the states to zero, which meant that the positions and velocities were driven to zero value and the system was stabilized. However, for a Segway robot it makes sense to stabilize the link and move with a constant velocity, therefore, we shall derive such a controller that should track a certain desired velocity.
+
+To track $\dot{x_{des}}$, we redefine the sliding surface to include a velocity tracking error:
+
+$$ e = k_{vel}(\dot{x} - \dot{x_des}) + k_3{\phi} + k4\dot{\phi}$$
+
+Here, $k_{vel}$ is a gain for velocity tracking and we removed $x$ terms from the sliding surface to focus on velocity rather than position.
+
+The derivative of the sliding surface would be:
+
+$$ \dot{e} = k_{vel}\ddot{x} + k_3\dot{\phi} + k4\ddot{\phi}$$
+
+Now we define the same Lyapunov function as previously, and substitute the sliding surface expression and it's derivative:
+
+$$L = \frac{1}{2} e^2 + \frac{1}{2} (\hat{\theta} - \theta)^2$$
+
+The derivative of this Lyapunov function is:
+
+$$\dot{L} = e( k_{vel}\ddot{x} + k_3\dot{\phi} + k4\ddot{\phi}) +(\hat{\theta} - \theta)\dot{\hat{\theta}}$$
+
+Now grouping the terms involving $\theta$ together, also substituting the expressions for $\ddot{x}$, and $\ddot{\phi}$.
+
+$$\dot{L} = e(k_1\dot{x} + k_3\dot{\phi} + vT + b \phi + c \hat{\theta}\dot{\phi}) +ec(\theta - \hat{\theta})\dot{\phi} + (\theta- \hat{\theta})\dot{\hat{\theta}}$$
+
+Here the definition of the variables $v$, $c$, and $b$, should change since the defintion of the sliding surface has changed. we find the expressions for the se variables by substituting $\ddot{x}$, and $\ddot{\phi}$ into the sliding surface expression and seperate the terms involving $T$ and $\theta\dot{\phi}$:
+
+$$v = \frac{k_2(I/R + Ccos\phi) + k_4(-Ccos\phi/R - M)}{MI - (Ccos\phi)^2}$$
+$$b = \frac{k_{vel}(IC\dot{\phi}^2 sin\phi - C^2gcos\phi sin\phi) + k_4(-C^2(\dot{\phi})^2cos\phi sin\phi + MCgsin\phi)}{MI - (Ccos\phi)^2} + k_3 \dot{phi}$$
+$$c = \frac{k_2Ccos\phi - k_4M}{MI - (Ccos\phi)^2}$$
+
+Notice, only definition of $b$ changed which now includes the velocity tracking gain and an additional term. 
+
+Now We want the part of our lyapunov derivative that has the state $e$ and control action $T$ to be $\leq-pe$, where $p$ is a design parameter, this will ensure that our control action keeps the lyapunov derivative strictly negative and thus ensuring a stable system.
+we choose the control action T as:
+
+$$ T = \frac{-pe + k_1\dot{x} + k_3 \dot{\phi} + b \phi + c\hat{\theta} \dot{\phi}}{v}$$
+
+Substituting this T into $\dot{L}$ we get:
+
+$$\dot{L} = -pe^2 +ec(\theta - \hat{\theta})\dot{\phi} + (\theta- \hat{\theta})\dot{\hat{\theta}}$$
+
+To get rid of the unknown $\theta$ term we propose an update law for $hat{\theta}$ as:
+
+$$ \dot{\hat{\theta}} = -ec\dot{\phi}$$
+
+This cancels the terms incluing $\theta$ and leaves us with a Lyapunov function derivative:
+
+$$\dot{L} = -pe^2$$
+
+which is strictly negative and satisfies our goal of driving the states to zero.
